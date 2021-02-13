@@ -1,33 +1,40 @@
 package TrabalhoPratico;
 
-import java.util.*; //adciona todas as classes utilitárias;
-		
+import java.util.*;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;	
+
 public class Meteorologia {
 	static int i , j, k;					/// Contadores											/// 
 	static int intervaloDeAnos = 10;																///											
 	static int mesesNoAno = 12;																		///	Variáveis Globais
 	static int maximoDiasMes = 31;																	///
 	static String[] meses = {"Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"};												
-	public static float[][][] temperatura = new float[intervaloDeAnos][mesesNoAno][maximoDiasMes]; 	///
+	public static double[][][] temperatura = new double[intervaloDeAnos][mesesNoAno][maximoDiasMes]; 	///
+	private static DecimalFormat df = new DecimalFormat("0.0");
 	
 	public static void main(String[] args) {
-		int opcao;	
+		float max = 50, min = -50;					/// max e min são os valores maximos e minimos das temperaturas de janeiro 2020
+		int opcao;
 		Scanner ler = new Scanner(System.in);
-		inicializaMatriz();	
+		inicializaMatriz();
+		for(i = 0;i < intervaloDeAnos;i++){
+			for(j = 0;j < mesesNoAno; j++) {
+				for(k = 0;k < maximoDiasMes;k++) {
+					temperatura[i][j][k] = geraRandom(min,max);
+				}
+			}
+		}
 		do {
 			menu();
 			opcao = ler.nextInt();
-			escolha(opcao);
-			try {
-				Thread.sleep(5000);										///Pausa a execução por 5 segundos.
-			} catch (InterruptedException e) {
-			}      
+			escolha(opcao);   
 		}while(opcao != 6);
 		ler.close();
 		System.exit(0);
 	}
 	
-	public static float[][][] inicializaMatriz() {						///preenche a matriz : temperatura com zeros;
+	public static double[][][] inicializaMatriz() {						///preenche a matriz : temperatura com zeros;
 		for(i = 0;i < intervaloDeAnos;i++) {
 			for(j = 0;j < mesesNoAno;j++) {
 				for(k = 0;k < maximoDiasMes;k++) {
@@ -116,7 +123,7 @@ public class Meteorologia {
 		}
 	}
 	
-	public static float[][][] cadastraTemperaturas(int mes, int ano) { 	/// cadastra as temperaturas
+	public static double[][][] cadastraTemperaturas(int mes, int ano) { 	/// cadastra as temperaturas
 		int dia, copia_ano, copia_mes;
 		Scanner ler = new Scanner(System.in);
 		copia_ano = ano - 2011;
@@ -155,7 +162,7 @@ public class Meteorologia {
 
 	public static void temperaturaMedia(int mes, int ano) { 			/// cálcula a média de temperaturas de um mês definido pelo usuário
 		int dia, copia_ano, copia_mes;
-		float media, total = 0;
+		double media, total = 0;
 		copia_ano = ano - 2011;
 		copia_mes = mes - 1;
 		if(mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) {
@@ -163,7 +170,7 @@ public class Meteorologia {
 				total = total + temperatura[copia_ano][copia_mes][dia];
 			}
 			media = total/31;
-			System.out.println("A média aritimética das temperaturas de "+ meses[copia_mes] + " é de "+ media +" °C\n");
+			System.out.println("A média aritimética das temperaturas de "+ meses[copia_mes] + " é de "+ df.format(media) +" °C\n");
 		} 
 		else if(mes == 2) {
 			if(ano % 400 == 0 || ano % 4 == 0 && ano % 100 != 0){
@@ -171,14 +178,14 @@ public class Meteorologia {
 					total += temperatura[copia_ano][copia_mes][dia];
 				}
 				media = total/29;
-				System.out.println("A média aritimética das temperaturas de "+ meses[copia_mes] + " é de "+ media +" °C\n");
+				System.out.println("A média aritimética das temperaturas de "+ meses[copia_mes] + " é de "+ df.format(media) +" °C\n");
 			}
 			else {
 				for(dia = 0;dia < 28;dia++) {
 					total += temperatura[copia_ano][copia_mes][dia];
 				}
 				media = total/28;
-				System.out.println("A média aritimética das temperaturas de "+ meses[copia_mes] + " é de "+ media +" °C\n");
+				System.out.println("A média aritimética das temperaturas de "+ meses[copia_mes] + " é de "+ df.format(media) +" °C\n");
 			}
 		}
 		else {
@@ -186,13 +193,13 @@ public class Meteorologia {
 				total += temperatura[copia_ano][copia_mes][dia];
 			}
 			media = total/30;
-			System.out.println("A média aritimética das temperaturas de "+ meses[copia_mes] + " é de "+ media +" °C\n");
+			System.out.println("A média aritimética das temperaturas de "+ meses[copia_mes] + " é de "+ df.format(media) +" °C\n");
 		}
 	}
 	
 	public static void temperaturaMinima(int mes, int ano) {			/// cálcula a temperatura mínima de um mês definido pelo usuário
 		int dia, copia_ano, copia_mes;
-		float minima = 0, total = 0;
+		double minima = 0;
 		copia_ano = ano - 2011;
 		copia_mes = mes - 1;
 		if(mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) {
@@ -202,7 +209,7 @@ public class Meteorologia {
 				if(temperatura[copia_ano][copia_mes][dia] < minima)
 					minima = temperatura[copia_ano][copia_mes][dia];
 			}
-			System.out.println("A temperatura minima do mês de "+ meses[copia_mes] + " foi de "+ minima +" °C");
+			System.out.println("A temperatura minima do mês de "+ meses[copia_mes] + " foi de "+ df.format(minima) +" °C");
 		} 
 		else if(mes == 2) {
 			if(ano % 400 == 0 || ano % 4 == 0 && ano % 100 != 0){
@@ -212,7 +219,7 @@ public class Meteorologia {
 					if(temperatura[copia_ano][copia_mes][dia] < minima)
 						minima = temperatura[copia_ano][copia_mes][dia];
 				}
-				System.out.println("A temperatura minima do mês de "+ meses[copia_mes] + " foi de "+ minima +" °C");
+				System.out.println("A temperatura minima do mês de "+ meses[copia_mes] + " foi de "+ df.format(minima) +" °C");
 			}
 			else {
 				for(dia = 0;dia < 28;dia++) {
@@ -221,7 +228,7 @@ public class Meteorologia {
 					if(temperatura[copia_ano][copia_mes][dia] < minima)
 						minima = temperatura[copia_ano][copia_mes][dia];
 				}
-				System.out.println("A temperatura minima do mês de "+ meses[copia_mes] + " foi de "+ minima +" °C");
+				System.out.println("A temperatura minima do mês de "+ meses[copia_mes] + " foi de "+ df.format(minima) +" °C");
 			}
 		}
 		else {
@@ -231,13 +238,13 @@ public class Meteorologia {
 				if(temperatura[copia_ano][copia_mes][dia] < minima)
 					minima = temperatura[copia_ano][copia_mes][dia];
 			}
-			System.out.println("A temperatura minima do mês de "+ meses[copia_mes] + " foi de "+ minima +" °C");
+			System.out.println("A temperatura minima do mês de "+ meses[copia_mes] + " foi de "+ df.format(minima) +" °C");
 		}
 	}
 	
 	public static void temperaturaMaxima(int mes, int ano) {			/// cálcula a temperatura máxima de um mês definido pelo usuário
 		int dia, copia_ano, copia_mes;
-		float maxima = 0, total = 0;
+		double maxima = 0;
 		copia_ano = ano - 2011;
 		copia_mes = mes - 1;
 		if(mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) {
@@ -247,7 +254,7 @@ public class Meteorologia {
 				if(temperatura[copia_ano][copia_mes][dia] > maxima)
 					maxima = temperatura[copia_ano][copia_mes][dia];
 			}
-			System.out.println("A temperatura maxima do mês de "+ meses[copia_mes] + " foi de "+ maxima +" °C");
+			System.out.println("A temperatura maxima do mês de "+ meses[copia_mes] + " foi de "+ df.format(maxima) +" °C");
 		} 
 		else if(mes == 2) {
 			if(ano % 400 == 0 || ano % 4 == 0 && ano % 100 != 0){
@@ -257,7 +264,7 @@ public class Meteorologia {
 					if(temperatura[copia_ano][copia_mes][dia] > maxima)
 						maxima = temperatura[copia_ano][copia_mes][dia];
 				}
-				System.out.println("A temperatura maxima do mês de "+ meses[copia_mes] + " foi de "+ maxima +" °C");
+				System.out.println("A temperatura maxima do mês de "+ meses[copia_mes] + " foi de "+ df.format(maxima) +" °C");
 			}
 			else {
 				for(dia = 0;dia < 28;dia++) {
@@ -266,7 +273,7 @@ public class Meteorologia {
 					if(temperatura[copia_ano][copia_mes][dia] > maxima)
 						maxima = temperatura[copia_ano][copia_mes][dia];
 				}
-				System.out.println("A temperatura maxima do mês de "+ meses[copia_mes] + " foi de "+ maxima +" °C");
+				System.out.println("A temperatura maxima do mês de "+ meses[copia_mes] + " foi de "+ df.format(maxima) +" °C");
 			}
 		}
 		else {
@@ -276,7 +283,7 @@ public class Meteorologia {
 				if(temperatura[copia_ano][copia_mes][dia] > maxima)
 					maxima = temperatura[copia_ano][copia_mes][dia];
 			}
-			System.out.println("A temperatura maxima do mês de "+ meses[copia_mes] + " foi de "+ maxima +" °C");
+			System.out.println("A temperatura maxima do mês de "+ meses[copia_mes] + " foi de "+ df.format(maxima) +" °C");
 		}
 	}
 
@@ -288,7 +295,7 @@ public class Meteorologia {
 		if(mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) {
 			System.out.println(" Temperatura média mês de "+ meses[copia_mes]+ ":\n");
 			for(dia = 0;dia < 31 ;dia++) {
-				System.out.println("Temperatura média do "+ (dia + 1) +"° dia foi de " + temperatura[copia_ano][copia_mes][dia] +" °C");
+				System.out.println("Temperatura média do "+ (dia + 1) +"° dia foi de " + df.format(temperatura[copia_ano][copia_mes][dia]) +" °C");
 			}
 			System.out.println();
 		} 
@@ -296,14 +303,14 @@ public class Meteorologia {
 			if(ano % 400 == 0 || ano % 4 == 0 && ano % 100 != 0){
 				System.out.println(" Temperatura média mês de "+ meses[copia_mes]+ ":");
 				for(dia = 0;dia < 29;dia++) {
-					System.out.println("Temperatura média do "+ (dia + 1) +"° dia foi de " + temperatura[copia_ano][copia_mes][dia] +" °C");
+					System.out.println("Temperatura média do "+ (dia + 1) +"° dia foi de " + df.format(temperatura[copia_ano][copia_mes][dia]) +" °C");
 				}
 				System.out.println();
 			}
 			else {
 				System.out.println(" Temperatura média mês de "+ meses[copia_mes]+ ":");
 				for(dia = 0;dia < 28;dia++) {
-					System.out.println("Temperatura média do "+ (dia + 1) +"° dia foi de " + temperatura[copia_ano][copia_mes][dia] +" °C");
+					System.out.println("Temperatura média do "+ (dia + 1) +"° dia foi de " + df.format(temperatura[copia_ano][copia_mes][dia]) +" °C");
 				}
 				System.out.println();
 			}
@@ -311,10 +318,16 @@ public class Meteorologia {
 		else {
 			System.out.println(" Temperatura média mês de "+ meses[copia_mes]+ ":");
 			for(dia = 0;dia < 30 ;dia++) {
-				System.out.println("Temperatura média do "+ (dia + 1) +"° dia foi de " + temperatura[copia_ano][copia_mes][dia] +" °C");
+				System.out.println("Temperatura média do "+ (dia + 1) +"° dia foi de " + df.format(temperatura[copia_ano][copia_mes][dia]) +" °C");
 			}
 			System.out.println();
 		}
 	}
+	
+	public static double geraRandom(float min, float max){
+	    double x = (Math.random()*((max-min)+1))+min;
+	    return x;
+	}
+
 }
 
