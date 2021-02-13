@@ -10,8 +10,8 @@ public class Meteorologia {
 	static int mesesNoAno = 12;																		///	Variáveis Globais
 	static int maximoDiasMes = 31;																	///
 	static String[] meses = {"Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"};												
-	public static double[][][] temperatura = new double[intervaloDeAnos][mesesNoAno][maximoDiasMes]; 	///
-	private static DecimalFormat df = new DecimalFormat("0.0");
+	public static double[][][] temperatura = new double[intervaloDeAnos][mesesNoAno][maximoDiasMes];///
+	private static DecimalFormat df = new DecimalFormat("0.0");										/// formata os valores decimais para usarem apenas uma casa após a virgula
 	
 	public static void main(String[] args) {
 		float max = 50, min = -50;					/// max e min são os valores maximos e minimos das temperaturas de janeiro 2020
@@ -209,7 +209,7 @@ public class Meteorologia {
 				if(temperatura[copia_ano][copia_mes][dia] < minima)
 					minima = temperatura[copia_ano][copia_mes][dia];
 			}
-			System.out.println("A temperatura minima do mês de "+ meses[copia_mes] + " foi de "+ df.format(minima) +" °C");
+			System.out.println("A temperatura mínima do mês de "+ meses[copia_mes] + " foi de "+ df.format(minima) +" °C");
 		} 
 		else if(mes == 2) {
 			if(ano % 400 == 0 || ano % 4 == 0 && ano % 100 != 0){
@@ -219,7 +219,7 @@ public class Meteorologia {
 					if(temperatura[copia_ano][copia_mes][dia] < minima)
 						minima = temperatura[copia_ano][copia_mes][dia];
 				}
-				System.out.println("A temperatura minima do mês de "+ meses[copia_mes] + " foi de "+ df.format(minima) +" °C");
+				System.out.println("A temperatura mínima do mês de "+ meses[copia_mes] + " foi de "+ df.format(minima) +" °C");
 			}
 			else {
 				for(dia = 0;dia < 28;dia++) {
@@ -228,7 +228,7 @@ public class Meteorologia {
 					if(temperatura[copia_ano][copia_mes][dia] < minima)
 						minima = temperatura[copia_ano][copia_mes][dia];
 				}
-				System.out.println("A temperatura minima do mês de "+ meses[copia_mes] + " foi de "+ df.format(minima) +" °C");
+				System.out.println("A temperatura mínima do mês de "+ meses[copia_mes] + " foi de "+ df.format(minima) +" °C");
 			}
 		}
 		else {
@@ -238,7 +238,7 @@ public class Meteorologia {
 				if(temperatura[copia_ano][copia_mes][dia] < minima)
 					minima = temperatura[copia_ano][copia_mes][dia];
 			}
-			System.out.println("A temperatura minima do mês de "+ meses[copia_mes] + " foi de "+ df.format(minima) +" °C");
+			System.out.println("A temperatura mínima do mês de "+ meses[copia_mes] + " foi de "+ df.format(minima) +" °C");
 		}
 	}
 	
@@ -254,7 +254,7 @@ public class Meteorologia {
 				if(temperatura[copia_ano][copia_mes][dia] > maxima)
 					maxima = temperatura[copia_ano][copia_mes][dia];
 			}
-			System.out.println("A temperatura maxima do mês de "+ meses[copia_mes] + " foi de "+ df.format(maxima) +" °C");
+			System.out.println("A temperatura máxima do mês de "+ meses[copia_mes] + " foi de "+ df.format(maxima) +" °C");
 		} 
 		else if(mes == 2) {
 			if(ano % 400 == 0 || ano % 4 == 0 && ano % 100 != 0){
@@ -264,7 +264,7 @@ public class Meteorologia {
 					if(temperatura[copia_ano][copia_mes][dia] > maxima)
 						maxima = temperatura[copia_ano][copia_mes][dia];
 				}
-				System.out.println("A temperatura maxima do mês de "+ meses[copia_mes] + " foi de "+ df.format(maxima) +" °C");
+				System.out.println("A temperatura máxima do mês de "+ meses[copia_mes] + " foi de "+ df.format(maxima) +" °C");
 			}
 			else {
 				for(dia = 0;dia < 28;dia++) {
@@ -273,7 +273,7 @@ public class Meteorologia {
 					if(temperatura[copia_ano][copia_mes][dia] > maxima)
 						maxima = temperatura[copia_ano][copia_mes][dia];
 				}
-				System.out.println("A temperatura maxima do mês de "+ meses[copia_mes] + " foi de "+ df.format(maxima) +" °C");
+				System.out.println("A temperatura máxima do mês de "+ meses[copia_mes] + " foi de "+ df.format(maxima) +" °C");
 			}
 		}
 		else {
@@ -283,7 +283,7 @@ public class Meteorologia {
 				if(temperatura[copia_ano][copia_mes][dia] > maxima)
 					maxima = temperatura[copia_ano][copia_mes][dia];
 			}
-			System.out.println("A temperatura maxima do mês de "+ meses[copia_mes] + " foi de "+ df.format(maxima) +" °C");
+			System.out.println("A temperatura máxima do mês de "+ meses[copia_mes] + " foi de "+ df.format(maxima) +" °C");
 		}
 	}
 
